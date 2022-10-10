@@ -179,7 +179,7 @@ func (handler Driver) Delete(ctx context.Context, files []string) ([]string, err
 		filePath := util.RelativePath(filepath.FromSlash(value))
 		if util.Exists(filePath) {
 			err := os.Remove(filePath)
-			if err != nil {
+			if err != nil && err != os.ErrNotExist {
 				util.Log().Warning("无法删除文件，%s", err)
 				retErr = err
 				deleteFailed = append(deleteFailed, value)
